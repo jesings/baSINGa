@@ -58,6 +58,7 @@ struct snode* find_song_an(char* artist, char* songname, struct snode* node){
     return find_song_an(artist,songname,node->next);
 }
 struct snode* find_song_a(char* artist, struct snode* node){
+    //note: seg faults on invalid input
     if(!node) return NULL;
     if(!strcmp(node->artist,artist))
         return node;
@@ -68,19 +69,22 @@ int len(struct snode* head){
     return 0;
 }
 struct snode* rand_song(struct snode* head){
+    if(!head) return NULL;
     int i = rand()%len(head);
     for(;i>0;i--){
         head = head->next;
     }
     return head;
 }
-void remove_snode(struct snode* to_remove, struct snode* head){
+struct snode* remove_snode(struct snode* to_remove, struct snode* head){
     struct snode* prev;
+    struct snode* first = head;
     while(head){
         if(head==to_remove){
-            if(prev) prev->next = head;
+            if(prev) prev->next = head->next;
+            if(to_remove==first) first = first->next;
             free(to_remove);
-            break;
+            return first;
         }
         prev = head;
         head = head->next;
@@ -88,7 +92,8 @@ void remove_snode(struct snode* to_remove, struct snode* head){
     printf("element not found in list\n");
 }
 void remove_slist(struct snode* head){
-    if(head->next)
-        remove_slist(head->next);
+    if(!head) return;
+    struct snode* delet_next = head->next;
     free(head);
+    remove_slist(delet_next);
 }
