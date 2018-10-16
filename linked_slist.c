@@ -27,9 +27,17 @@ struct snode* add_alph(struct snode* head, struct snode* to_insert){
             to_insert->next = NULL; 
             break;
         }
-        int cmpnum = strcmp(tolower(working->artist),tolower(to_insert->artist));
+        char wartist[100];
+        for (int i =0; (working->artist)[i]; ++i) wartist[i] = tolower((working->artist)[i]);
+        char iartist[100];
+        for (int i =0; (to_insert->artist)[i]; ++i) iartist[i] = tolower((to_insert->artist)[i]);
+        int cmpnum = strcmp(wartist,iartist);
         if(!cmpnum){
-            if(strcmp(tolower(working->name),tolower(to_insert->name))<0){
+            char wname[100];
+            for (int i =0; (working->name)[i]; ++i) wname[i] = tolower((working->name)[i]);
+            char iname[100];
+            for (int i =0; (to_insert->name)[i]; ++i) iname[i] = tolower((to_insert->name)[i]);
+            if(strcmp(wname,iname)<0){
                 prev = working;
                 working = working -> next;
                 continue;
