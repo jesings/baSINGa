@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "snode.h"
 struct snode* make_snode(char* song_name, char* artist_name){
     struct snode* new_snode = malloc(sizeof(struct snode));
@@ -9,10 +10,13 @@ struct snode* make_snode(char* song_name, char* artist_name){
     return new_snode;
 }
 struct snode* add_front(struct snode* head, struct snode* to_insert){
+    if(!to_insert) return NULL;
     to_insert->next = head;
     return to_insert;
 }
 struct snode* add_alph(struct snode* head, struct snode* to_insert){
+    if(!to_insert)
+        return NULL;
     if(!head) 
         return add_front(head,to_insert);
     struct snode* working = head->next;
@@ -23,8 +27,9 @@ struct snode* add_alph(struct snode* head, struct snode* to_insert){
             to_insert->next = NULL; 
             break;
         }
-        if(!strcmp(working->artist,to_insert->artist)){
-            if(strcmp(working->name,to_insert->name)<0){
+        int cmpnum = strcmp(tolower(working->artist),tolower(to_insert->artist));
+        if(!cmpnum){
+            if(strcmp(tolower(working->name),tolower(to_insert->name))<0){
                 prev = working;
                 working = working -> next;
                 continue;
@@ -35,7 +40,7 @@ struct snode* add_alph(struct snode* head, struct snode* to_insert){
                 break;
             }
         }
-        if(strcmp(working->artist,to_insert->artist)<0){
+        if(cmpnum<0){
             prev = working;
             working = working -> next;
             continue;
@@ -47,6 +52,7 @@ struct snode* add_alph(struct snode* head, struct snode* to_insert){
     return head;
 }
 void print_lib(struct snode* head){
+    if(!head) return;
     printf("song: %s, artist: %s \n",head->name,head->artist);
     if(head->next)
         print_lib(head->next);
