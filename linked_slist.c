@@ -11,8 +11,8 @@ char cistrcmp(char* all, char* star) {
 
 struct snode* make_snode(char* song_name, char* artist_name){
   struct snode* new_snode = malloc(sizeof(struct snode));
-  strcpy(new_snode->name,song_name);
-  strcpy(new_snode->artist,artist_name);
+  strcpy(new_snode->name, song_name);
+  strcpy(new_snode->artist, artist_name);
   return new_snode;
 }
 
@@ -23,17 +23,21 @@ struct snode* add_front(struct snode* head, struct snode* to_insert){
 }
 
 struct snode* add_alph(struct snode* head, struct snode* to_insert){
-  int cmpnum = cistrcmp(head->artist, to_insert->artist);
-  if (!to_insert || !head || cmpnum < 0 || (!cmpnum && cistrcmp(head->name, to_insert->name) < 0)) 
+  if (!to_insert || !head)
     return add_front(head, to_insert);
-  struct snode* prev = head;
+  int cmpnum = cistrcmp(head->artist, to_insert->artist);
+  if (cmpnum > 0 || (!cmpnum && cistrcmp(head->name, to_insert->name) > 0)) {
+    return add_front(head, to_insert);
+  }
+  struct snode* prev = head; 
   for (;prev->next; prev = prev->next) {
     int cmpnum = cistrcmp(prev->next->artist, to_insert->artist);
-    if (cmpnum < 0 || (!cmpnum && cistrcmp(prev->next->name, to_insert->name) < 0))
+    if (cmpnum > 0 || (!cmpnum && cistrcmp(prev->next->name, to_insert->name) > 0))
       break;
   }
   to_insert->next = prev->next;
   prev->next = to_insert;
+  return head;
 }
 
 void print_lib(struct snode* head){
