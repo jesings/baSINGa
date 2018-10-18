@@ -59,7 +59,6 @@ void swap(struct snode* prts[], int i1, int i2) {
 }
 
 void rm_song(struct snode* sbucket[], char* artist, char* song) {
-  printf("asdofnasoi");
   char ti = chri(*artist);
   struct snode* e = find_song_an(artist, song, sbucket[ti]);
   if (sbucket[ti] && e)
