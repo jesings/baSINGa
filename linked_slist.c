@@ -84,8 +84,8 @@ struct snode* rand_song(struct snode* head){
 struct snode* remove_snode(struct snode* to_remove, struct snode* head){
     struct snode* prev;
     struct snode* first = head;
-    while(head){
-        if(head==to_remove){
+    while(head) {
+        if(head == to_remove) {
             if(prev) prev->next = head->next;
             if(to_remove==first) first = first->next;
             free(to_remove);

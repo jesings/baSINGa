@@ -60,9 +60,11 @@ void swap(struct snode* prts[], int i1, int i2) {
 
 void rm_song(struct snode* sbucket[], char* artist, char* song) {
   char ti = chri(*artist);
-  struct snode* e = find_song_an(artist, song, sbucket[ti]);
-  if (sbucket[ti] && e)
-    sbucket[ti] = remove_snode(sbucket[ti], e);
+  struct snode* e = last_sbucket(sbucket, ti - 1);
+  struct snode* tr = find_song_an(artist, song, sbucket[ti]);
+  printf("did not in fact seg fault yet again\n");
+  if (sbucket[ti] && tr)
+    sbucket[ti] =  first_letter(remove_snode(e ? e : sbucket[ti], tr), *artist);
   else printf("song not found in library\n");
 }
 
