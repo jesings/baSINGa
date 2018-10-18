@@ -1,15 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "linked_slist.h"
+#include "sbucket.h"
 #include "snode.h"
 int main(){
-  
-  
-  struct snode* head = make_snode("All Star", "Smash Mouth");
+
+  printf("=============== linked list functions ======================\n\n");
+  struct snode* head = NULL;
+  head = add_alph(head, make_snode("All Star", "Smash Mouth"));
   head = add_alph(head,make_snode("Ra Ra Rasputin", "Boney M."));
   head = add_alph(head,make_snode("Moskau", "Dschinghis Khan"));
   head = add_alph(head,make_snode("Bazinga", "Theodore Peters"));
-
+  head = add_alph(head, make_snode("Decades of Synthetic Tears", "Benson Goldman"));
   print_lib(head);
   
   printf("Finding Bazinga by Theodore Peters:\n");
@@ -21,7 +23,48 @@ int main(){
   printf("List result:\n");
   print_lib(head);
   printf("Freeing whole list:\n");
-  remove_slist(head);
+  head = remove_slist(head);
+
+
+  
+  printf("============= music library functions =================\n");
+  struct snode* sbucket[27];
+  init_sbucket(sbucket);
+  printf("adding values to sbucket:\n");
+  add_sbucket(make_snode("Several Species of Small Furry Animals Gathered Together in a Cave and Grooving with a Pict", "Pink Floyd"), sbucket);
+  add_sbucket(make_snode("Tarkus", "Emerson, Lake & Palmer"), sbucket);
+  add_sbucket(make_snode("Metropolis--Part I: \"The Miracle and the Sleeper\"", "Dream Theater"), sbucket);
+  add_sbucket(make_snode("The Sound of Muzak", "Porcupine Tree"), sbucket);
+  add_sbucket(make_snode("When the Levee Breaks", "Led Zeppelin"), sbucket);
+  add_sbucket(make_snode("When the Levee Breaks", "Perfect Circle"), sbucket);
+  add_sbucket(make_snode("21st Century Schizoid Man", "21st Century Schizoid Band"), sbucket);
+  add_sbucket(make_snode("Pigs On the Wing (Part 1)", "PINK FLOYD"), sbucket);
+  add_sbucket(make_snode("pIGS oN tHE wING (pART 2)", "pINK fLOYD"), sbucket);
+  add_sbucket(make_snode("Pigs (Three Different Ones)", "pink floyd"), sbucket);
+  add_sbucket(make_snode("Racecar", "Periphery"), sbucket);
+  add_sbucket(make_snode("Mr. Invisible", "Thank You Scientist"), sbucket);
+  print_whole_lib(sbucket);
+  printf("\n\n");
+  printf("printing letter:\n");
+  print_single_letter(sbucket, '?');
+  printf("and again...\n");
+  print_single_letter(sbucket, 'p');
+  printf("printing artist:\n");
+  print_single_artist(sbucket, "pInK fLoYd");
+
+  printf("Mr. Invisible's been found...\n");
+  
+  struct snode* song = find_s(sbucket, "Thank You Scientist", "Mr. Invisible");
+  printf("found song... %s by %s\n", song->name, song->artist);
+
+
+  printf("removing a song...\n");
+  rm_song(sbucket, "Perfect Circle", "When the Levee Breaks");
+  print_whole_lib(sbucket);
+  print_single_letter(sbucket, 'p');
+
+
+  //shuffle(sbucket);
   
   return 0;
 }
