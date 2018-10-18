@@ -12,23 +12,24 @@ struct snode* first_sbucket(struct snode* sbucket[], int start) {
 
 struct snode* last_sbucket(struct snode* sbucket[], int end) {
   struct snode* out = NULL;
-  for (int i = end; i > -1 && !(out = sbucket[i]); i++);
+  for (int i = end; i >= 0 && !(out = sbucket[i]); i--);
   return out;
 }
 
-char chri(char c) {
-  if ('a' <= tolower(c)  && tolower(c) <= 'z') return c - 'a';
-  return 26;
+struct snode* first_letter(struct snode* start, char l) {
+  for(;start && chri(*start->artist) - chri(l); start = start->next);
+  return start;
 }
 
-struct snode** init_sbucket(struct snode* sbucket[]) {
-  for(int i = 0; i < 26; sbucket[i++] = NULL);
-  return sbucket;
+void init_sbucket(struct snode* sbucket[]) {
+  for(int i = 0; i < 27; sbucket[i++] = NULL);
 }
 
 struct snode* add_sbucket(struct snode* snew, struct snode* sbucket[]) {
-  sbucket[chri(*snew->artist)] =  add_alph(last_sbucket(sbucket, chri(*snew->artist)), snew);
-  if (!snew->next && chri(*snew->artist) < 26) snew->next = first_sbucket(sbucket, chri(*snew->artist) + 1);
+  struct snode* e = last_sbucket(sbucket, chri(*snew->artist) - 1);
+  sbucket[chri(*snew->artist)] =  first_letter(add_alph(e ? e : sbucket[chri(*snew->artist)], snew), *snew->artist);
+  if (!snew->next)
+    snew->next = first_sbucket(sbucket, chri(*snew->artist) + 1);
   return snew;
 }
 
@@ -47,6 +48,7 @@ void print_single_artist(struct snode* sbucket[], char* artist_name) {
 
 void print_whole_lib(struct snode* sbucket[]) {
   print_lib(first_sbucket(sbucket, 0));
+  printf("\n");
 }
 
 void swap(struct snode* prts[], int i1, int i2) {
