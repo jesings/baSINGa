@@ -32,32 +32,39 @@ int main(){
   init_sbucket(sbucket);
   printf("adding values to sbucket:\n");
   add_sbucket(make_snode("Several Species of Small Furry Animals Gathered Together in a Cave and Grooving with a Pict", "Pink Floyd"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("Tarkus", "Emerson, Lake & Palmer"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("Metropolis--Part I: \"The Miracle and the Sleeper\"", "Dream Theater"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("The Sound of Muzak", "Porcupine Tree"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("When the Levee Breaks", "Led Zeppelin"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("When the Levee Breaks", "Perfect Circle"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("21st Century Schizoid Man", "21st Century Schizoid Band"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("Pigs On the Wing (Part 1)", "PINK FLOYD"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("pIGS oN tHE wING (pART 2)", "pINK fLOYD"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("Pigs (Three Different Ones)", "pink floyd"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("Racecar", "Periphery"), sbucket);
-  print_whole_lib(sbucket);
   add_sbucket(make_snode("Mr. Invisible", "Thank You Scientist"), sbucket);
-
   print_whole_lib(sbucket);
   printf("\n\n");
-  shuffle(sbucket);
+  printf("printing letter:\n");
+  print_single_letter(sbucket, '?');
+  printf("and again...\n");
+  print_single_letter(sbucket, 'p');
+  printf("printing artist:\n");
+  print_single_artist(sbucket, "pInK fLoYd");
+
+  printf("Mr. Invisible's been found...\n");
+  
+  struct snode* song = find_s(sbucket, "Thank You Scientist", "Mr. Invisible");
+  printf("found song... %s by %s\n", song->name, song->artist);
+
+
+  printf("removing a song...\n");
+  rm_song(sbucket, "Perfect Circle", "When the Levee Breaks");
+  print_whole_lib(sbucket);
+  print_single_letter(sbucket, 'p');
+
+
+  //shuffle(sbucket);
   
   return 0;
 }

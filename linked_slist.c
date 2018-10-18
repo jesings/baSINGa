@@ -37,7 +37,6 @@ struct snode* add_alph(struct snode* head, struct snode* to_insert) {
   }
   struct snode* prev = head; 
   for (;prev->next; prev = prev->next) {
-    printf("%s -?> %s -?> %s\n", prev->artist, to_insert->artist, prev->next->artist);
     int cmpnum = cistrcmp(prev->next->artist, to_insert->artist);
     if (chri(*to_insert->artist) != 26 && chri(*prev->next->artist) == 26) break;
     if (chri(*to_insert->artist) == 26 && chri(*prev->next->artist) != 26) continue;
@@ -56,18 +55,16 @@ void print_lib(struct snode* head) {
 }
 
 struct snode* find_song_an(char* artist, char* songname, struct snode* node){
-    if(!node) return NULL;
-    if(!strcmp(node->artist,artist)&&!cistrcmp(node->name,songname))
-        return node;
+  if(node && (cistrcmp(node->artist, artist) || cistrcmp(node->name, songname)))
     return find_song_an(artist,songname,node->next);
+  return node;
 }
 
 struct snode* find_song_a(char* artist, struct snode* node){
-    //note: seg faults on invalid input
-    if(!node) return NULL;
-    if(!strcmp(node->artist,artist))
-        return node;
-    return find_song_a(artist,node->next);
+  //note: seg faults on invalid input
+  if(node && cistrcmp(node->artist,artist))
+    return find_song_a(artist, node->next);
+  return node;
 }
 
 int len(struct snode* head) {

@@ -37,18 +37,19 @@ struct snode* find_s(struct snode* sbucket[], char * sartist, char * sname) {
   return find_song_an(sartist, sname, sbucket[chri(*sartist)]);
 }
 
-void print_single_letter(struct snode* sbucket[], char letter) {
-  print_lib(sbucket[chri(letter)]);
-}
-
-void print_single_artist(struct snode* sbucket[], char* artist_name) {
-  for(struct snode* startist = find_song_a(artist_name, sbucket[chri(*artist_name)]); startist && !cistrcmp(startist->artist, artist_name); startist = startist->next)
-    printf("song: %s, artist: %s \n", startist->name, startist->artist);  
-}
-
 void print_whole_lib(struct snode* sbucket[]) {
   print_lib(first_sbucket(sbucket, 0));
   printf("\n");
+}
+
+void print_single_letter(struct snode* sbucket[], char letter) {
+  for(struct snode* sletter = sbucket[chri(letter)];sletter && chri(letter) == chri(*sletter->artist); sletter = sletter->next)
+    printf("song: %s, artist: %s \n", sletter->name, sletter->artist);  
+}
+
+void print_single_artist(struct snode* sbucket[], char* artist_name) {
+  for(struct snode* startist = find_song_a(artist_name, sbucket[chri(*artist_name)]);startist && !cistrcmp(startist->artist, artist_name); startist = startist->next)
+    printf("song: %s, artist: %s \n", startist->name, startist->artist);  
 }
 
 void swap(struct snode* prts[], int i1, int i2) {
