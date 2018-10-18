@@ -59,6 +59,7 @@ void swap(struct snode* prts[], int i1, int i2) {
 }
 
 void rm_song(struct snode* sbucket[], char* artist, char* song) {
+  printf("asdofnasoi");
   char ti = chri(*artist);
   struct snode* e = find_song_an(artist, song, sbucket[ti]);
   if (sbucket[ti] && e)
@@ -75,4 +76,7 @@ void shuffle(struct snode* sbucket[]) {
     swap(ptrs, i, rand() % (i + 1));
     printf("song: %s, artist: %s \n", ptrs[i]->name, ptrs[i]->artist);
   }
+}
+void rm_sbuckets(struct snode* sbucket[]){
+  remove_slist(first_sbucket(sbucket,0));
 }
