@@ -82,20 +82,18 @@ struct snode* rand_song(struct snode* head){
 }
 
 struct snode* remove_snode(struct snode* to_remove, struct snode* head){
-    struct snode* prev;
-    struct snode* first = head;
-    while(head) {
-        if(head == to_remove) {
-            if(prev) prev->next = head->next;
-            if(to_remove==first) first = first->next;
-            free(to_remove);
-            return first;
-        }
-        prev = head;
-        head = head->next;
-    }
-    printf("element not found in list\n");
-    return NULL;
+  if (to_remove == head) {
+    head = head->next;
+    free(to_remove);
+  } else {
+    struct snode* prev = head;
+    for(;prev->next && prev->next != to_remove; prev = prev->next);
+    if (!prev->next)
+      return NULL;
+    prev->next = prev->next->next;
+    free(to_remove);
+  }
+  return head;
 }
 
 struct snode* remove_slist(struct snode* head){

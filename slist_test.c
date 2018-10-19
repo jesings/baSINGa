@@ -3,7 +3,7 @@
 #include "linked_slist.h"
 #include "sbucket.h"
 #include "snode.h"
-int main(){
+int main() {
 
   printf("=============== linked list functions ======================\n\n");
   struct snode* head = NULL;
@@ -58,13 +58,17 @@ int main(){
   printf("found song... %s by %s\n", song->name, song->artist);
 
 
-  printf("removing a song...\n");
+  printf("removing perfect circle\n");
   rm_song(sbucket, "Perfect Circle", "When the Levee Breaks");
+  printf("here is the entire library and letter bin entry minus that song...\n\n");
   print_whole_lib(sbucket);
   print_single_letter(sbucket, 'p');
 
+  printf("\n\ngetting you that truly random and epic shuffling of all of your songs.............\n\n");
 
-  //shuffle(sbucket);
+  shuffle(sbucket);
+
+  rm_sbuckets(sbucket);
   
   return 0;
 }

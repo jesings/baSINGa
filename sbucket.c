@@ -43,8 +43,8 @@ void print_whole_lib(struct snode* sbucket[]) {
 }
 
 void print_single_letter(struct snode* sbucket[], char letter) {
-  for(struct snode* sletter = sbucket[chri(letter)];sletter && chri(letter) == chri(*sletter->artist); sletter = sletter->next)
-    printf("song: %s, artist: %s \n", sletter->name, sletter->artist);  
+  for(struct snode* sletter = sbucket[chri(letter)]; sletter && chri(letter) == chri(*sletter->artist); sletter = sletter->next)
+    printf("song: %s, artist: %s \n", sletter->name, sletter->artist);
 }
 
 void print_single_artist(struct snode* sbucket[], char* artist_name) {
@@ -62,10 +62,10 @@ void rm_song(struct snode* sbucket[], char* artist, char* song) {
   char ti = chri(*artist);
   struct snode* e = last_sbucket(sbucket, ti - 1);
   struct snode* tr = find_song_an(artist, song, sbucket[ti]);
-  printf("did not in fact seg fault yet again\n");
-  if (sbucket[ti] && tr)
-    sbucket[ti] =  first_letter(remove_snode(e ? e : sbucket[ti], tr), *artist);
-  else printf("song not found in library\n");
+  if (tr)
+    sbucket[ti] =  first_letter(remove_snode(tr, e ? e : sbucket[ti]), *artist);
+  else
+    printf("how rude, this song doesnt exist!!\n");
 }
 
 void shuffle(struct snode* sbucket[]) {
@@ -73,7 +73,7 @@ void shuffle(struct snode* sbucket[]) {
   int l = len(tmp);
   struct snode* ptrs[l];
   for (int i = 0; ptrs[i++] = tmp; tmp = tmp->next);
-  for(int i = l; i > 0; i--) {
+  for(int i = l - 1; i >= 0; i--) {
     swap(ptrs, i, rand() % (i + 1));
     printf("song: %s, artist: %s \n", ptrs[i]->name, ptrs[i]->artist);
   }

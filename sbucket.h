@@ -11,6 +11,7 @@ void print_whole_lib(struct snode* sbucket[]);
 
 struct snode* rm_song(struct snode* sbucket[], char* artist, char* song);
 void shuffle(struct snode* sbucket[]);
+void rm_sbuckets(struct snode* sbucket[]);
 
 //       V   helpers     V
 
