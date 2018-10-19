@@ -25,15 +25,16 @@ void init_sbucket(struct snode* sbucket[]) {
   for(int i = 0; i < 27; sbucket[i++] = NULL);
 }
 
-struct snode* add_sbucket(struct snode* snew, struct snode* sbucket[]) {
-  struct snode* e = last_sbucket(sbucket, chri(*snew->artist) - 1);
-  sbucket[chri(*snew->artist)] =  first_letter(add_alph(e ? e : sbucket[chri(*snew->artist)], snew), *snew->artist);
+struct snode* add_sbucket(struct snode* sbucket[], char* sname, char* sartist) {
+  struct snode* snew = make_snode(sname, sartist);
+  struct snode* e = last_sbucket(sbucket, chri(*sartist) - 1);
+  sbucket[chri(*sartist)] =  first_letter(add_alph(e ? e : sbucket[chri(*sartist)], snew), *sartist);
   if (!snew->next)
-    snew->next = first_sbucket(sbucket, chri(*snew->artist) + 1);
+    snew->next = first_sbucket(sbucket, chri(*sartist) + 1);
   return snew;
 }
 
-struct snode* find_s(struct snode* sbucket[], char * sartist, char * sname) {
+struct snode* find_s(struct snode* sbucket[], char* sname, char* sartist) {
   return find_song_an(sartist, sname, sbucket[chri(*sartist)]);
 }
 
@@ -58,7 +59,7 @@ void swap(struct snode* prts[], int i1, int i2) {
   prts[i2] = tmp;
 }
 
-void rm_song(struct snode* sbucket[], char* artist, char* song) {
+void rm_song(struct snode* sbucket[], char* song, char* artist) {
   char ti = chri(*artist);
   struct snode* e = last_sbucket(sbucket, ti - 1);
   struct snode* tr = find_song_an(artist, song, sbucket[ti]);
